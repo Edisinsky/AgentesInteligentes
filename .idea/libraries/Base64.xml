@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Base64">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/Downloads/LIBRERIAS JADE/Base64.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/LIBRERIAS JADE/commons-codec-1.3.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/LIBRERIAS JADE/jade.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/LIBRERIAS JADE/jgap.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
