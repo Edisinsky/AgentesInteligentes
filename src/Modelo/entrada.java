@@ -39,7 +39,7 @@ public class entrada implements Serializable{
 
     @Override 
     public String toString(){
-        return "Sensor1: " + Sensor1 + " Sensor2: " + Sensor2 + " Sensor3: " + Sensor3;
+        return "Sensor1: " + Sensor1 + " Sensor2: " + Sensor2 + " Sensor3: " + Sensor3 + " Sensor4: " + Sensor4;
     }
 }
 

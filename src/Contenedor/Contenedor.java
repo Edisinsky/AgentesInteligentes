@@ -42,18 +42,16 @@ public class Contenedor {
             mainContenedor.createNewAgent("Ag5", Agente5.class.getName(), null).start();
             mainContenedor.createNewAgent("Ag4", Agente4.class.getName(), null).start();
             mainContenedor.createNewAgent("Ag3", Agente3.class.getName(), new Object[] { this }).start();
-            mainContenedor
-                    .createNewAgent("Ag2", Agente2.class.getName(), new Object[] { new entrada("v1", "v2", "v3", 9) })
-                    .start();
-            mainContenedor.createNewAgent("Ag1", Agente1.class.getName(), null).start();
+            mainContenedor.createNewAgent("Ag2", Agente2.class.getName(),null).start();
+            mainContenedor.createNewAgent("Ag1", Agente1.class.getName(),  new Object[] { new entrada("v1", "v2", "v3", 1)}).start();
         } catch (StaleProxyException ex) {
             Logger.getLogger(Contenedor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void crearHijos(Object[] conocimiento) {
+    public void crearHijos(Object conocimiento) {
         try {
-            mainContenedor.createNewAgent("AgH", AgenteH.class.getName(), conocimiento).start();
+            mainContenedor.createNewAgent("AgH", AgenteH.class.getName(), new Object[] {conocimiento}).start();
         } catch (StaleProxyException ex) {
             Logger.getLogger(Contenedor.class.getName()).log(Level.SEVERE, null, ex);
         }

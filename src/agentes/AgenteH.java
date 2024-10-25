@@ -16,31 +16,26 @@ public class AgenteH extends Agent {
     boolean done = false;
     @Override
     protected void setup() {
-        // es para abrir cerrar puertos y liberar recursos
-      // addBehaviour(new ComportamientoAgente1());
         addBehaviour(new ComportamientoAgenteH());
-        super.setup(); //To change body of generated methods, choose Tools | Templates.
     }
   
-    class ComportamientoAgenteH extends Behaviour {
+    class ComportamientoAgenteH extends CyclicBehaviour {
         //ACCION
         @Override
         public void action() {
-            entrada entrada = (entrada) getArguments()[0];
-            entrada.setSensor4(entrada.getSensor4()+1);
-            //System.out.println("Soy AgH mi informacion es "+ entrada);
+            //Hijo de 3 nace
+
+            entrada entrada = (entrada) getArguments()[0];//Adquirir el conocimiento del agente 3
+            entrada.setSensor4(entrada.getSensor4()+1);//Aumentar el valor de sensor 4
+
             // Enviar mensaje al agente 4
-            Contenedor c = (Contenedor) getArguments()[1];
             Mensajes.send_msj_Object(ACLMessage.INFORM, "Ag4",getAgent() , "H-4", entrada);
-            System.out.println("Mensaje enviado a Agente 4");
-            done = true;
+
+            ACLMessage aclMSJ = blockingReceive();
 
         }
 
-        @Override
-        public boolean done() {
-            return done;
-        }
+
 
     }
 }

@@ -23,15 +23,19 @@ public class Agente4 extends Agent {
           
            
             try {
+                //Recibir mensaje de Agente 2
                 ACLMessage aclMSJ2 = blockingReceive();
-                entrada entrada = (entrada) aclMSJ2.getContentObject();
+                entrada entrada1 = (entrada) aclMSJ2.getContentObject();//Recibir conocimiento del agente 2
                 System.out.println("Hola agente 2, recibido, SOY  AGENTE 4: "+aclMSJ2.getContentObject()+" "+aclMSJ2.getConversationId());
 
+                //Recibir mensaje de Agente H
                 ACLMessage aclMSJ = blockingReceive();
+                entrada entrada2 = (entrada) aclMSJ.getContentObject();//Recibir conocimiento del agente H
+                entrada2.setSensor4(entrada2.getSensor4() + 1);   //Aumentar el valor de sensor 4
                 System.out.println("Hola agente H, soy Agente 4, Recibido "+aclMSJ.getConversationId() + " " + aclMSJ.getContentObject());
                
-                
-                
+                //Unir ambas entradas para enviar una sola al agente 5
+                entrada entrada = new entrada(entrada1.getSensor1(), entrada1.getSensor2(), entrada1.getSensor3(), entrada2.getSensor4());
 
                 // Enviar mensaje a agente 5
                 Mensajes.send_msj_Object(ACLMessage.INFORM, "Ag5", getAgent(),
