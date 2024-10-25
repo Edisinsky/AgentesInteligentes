@@ -2,14 +2,15 @@
 package agentes;
 
 import Mensaje.Mensajes;
-import Modelo.entrada;
+import Modelo.Entrada;
 import jade.core.Agent;
-import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 
 public class Agente1 extends Agent {
+    int cont=0;
+    Entrada entrada;
 
     @Override
     protected void setup() {
@@ -21,14 +22,25 @@ public class Agente1 extends Agent {
         @Override
         public void action() {
 
-            entrada entrada = (entrada) getArguments()[0];
-            entrada.setSensor4(entrada.getSensor4() + 1);
+            if (cont==0){
+                entrada = (Entrada) getArguments()[0];
+                entrada.setSensor4(entrada.getSensor4() + 1);
+            }
+            System.out.println("Hola soy el agente 1, mi contador es: "+cont);
+
             // Enviar mensaje tipo objeto a agente 2
             Mensajes.send_msj_Object(ACLMessage.INFORM, "Ag2", getAgent(),
                     "cod-1-2", entrada);
             // Recibir mensaje de agente 5
             ACLMessage aclMSJ = blockingReceive();
-            doDelete();
+            try {
+                entrada = (Entrada) aclMSJ.getContentObject();
+                System.out.println("Hola soy el agente 1, recibido de agente 5: "+entrada.toString() + " " + aclMSJ.getConversationId());
+                cont++;
+            } catch (UnreadableException e) {
+                throw new RuntimeException(e);
+            }
+            //doDelete();
 
 
         }

@@ -2,17 +2,17 @@
 package agentes;
 
 import Mensaje.Mensajes;
+import Modelo.Entrada;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 
 public class Agente5 extends Agent {
-
+    Entrada entrada;
     @Override
     protected void setup() {
         addBehaviour(new ComportamientoAg5());
-        super.setup();
     }
 
     class ComportamientoAg5 extends Behaviour {
@@ -23,10 +23,11 @@ public class Agente5 extends Agent {
             try {
                 // Recibir mensaje de agente 4
                 ACLMessage aclMSJ = blockingReceive();
-                System.out.println("Hola Agente 4, soy agente 5, RECIBIDO" + aclMSJ.getContentObject());
+                System.out.println("Hola Agente 4, soy agente 5, RECIBIDO" + aclMSJ.getContentObject() +" "+ aclMSJ.getConversationId());
+                entrada = (Entrada) aclMSJ.getContentObject();
                 // Enviar mensaje a agente 1
-                Mensajes.send_msj(ACLMessage.INFORM, "Ag1", getAgent(),
-                        "cod-5-1", "Hola mi nombre es " + getName());
+                Mensajes.send_msj_Object(ACLMessage.INFORM, "Ag1", getAgent(),
+                        "cod-5-1", entrada);
             } catch (UnreadableException e) {
                 e.printStackTrace();
             }

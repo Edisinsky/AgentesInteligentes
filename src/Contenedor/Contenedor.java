@@ -1,6 +1,7 @@
 
 package Contenedor;
 
+import Modelo.Entrada;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.wrapper.AgentContainer;
@@ -9,7 +10,6 @@ import jade.wrapper.StaleProxyException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import Modelo.entrada;
 import agentes.Agente1;
 import agentes.Agente2;
 import agentes.Agente3;
@@ -43,15 +43,15 @@ public class Contenedor {
             mainContenedor.createNewAgent("Ag4", Agente4.class.getName(), null).start();
             mainContenedor.createNewAgent("Ag3", Agente3.class.getName(), new Object[] { this }).start();
             mainContenedor.createNewAgent("Ag2", Agente2.class.getName(),null).start();
-            mainContenedor.createNewAgent("Ag1", Agente1.class.getName(),  new Object[] { new entrada("v1", "v2", "v3", 1)}).start();
+            mainContenedor.createNewAgent("Ag1", Agente1.class.getName(),  new Object[] { new Entrada("v1", "v2", "v3", 1,1)}).start();
         } catch (StaleProxyException ex) {
             Logger.getLogger(Contenedor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void crearHijos(Object conocimiento) {
+    public void crearHijos(String  nombre,Object[] conocimiento) {
         try {
-            mainContenedor.createNewAgent("AgH", AgenteH.class.getName(), new Object[] {conocimiento}).start();
+            mainContenedor.createNewAgent(nombre, AgenteH.class.getName(), conocimiento).start();
         } catch (StaleProxyException ex) {
             Logger.getLogger(Contenedor.class.getName()).log(Level.SEVERE, null, ex);
         }
