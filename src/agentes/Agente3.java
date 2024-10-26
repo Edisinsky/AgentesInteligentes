@@ -11,12 +11,12 @@ import jade.lang.acl.UnreadableException;
 public class Agente3 extends Agent {
     Contenedor contenedor;
     Entrada entrada;
-
+    String nombreAg = "";
 
     // El agente realiza una ultima accion antes de ser eliminado
     @Override
     protected void takeDown() {
-        contenedor.crearHijos("AgenteH"+1,new Object[]{entrada, contenedor});
+        contenedor.crearHijos(nombreAg,new Object[]{entrada, contenedor});
         System.out.println("Agente 3 terminado, el conocimiento previo del hijo es: " + entrada.toString());
 
     }
@@ -41,10 +41,12 @@ public class Agente3 extends Agent {
                 entrada.setSensor4(entrada.getSensor4() + 1);//Aumentar el valor de sensor 4
                 //Adquirir el contenedor
                 contenedor = (Contenedor) getArguments()[0];
-
+                int numHijo = entrada.getNumHijo()+1;
+                nombreAg  = "AgenteH" + numHijo;
                 System.out.println("MENSAJE DE AGENTE 2 RECIBIDO, SOY AGENTE 3 " + aclMSJ.getContentObject() +" "+ aclMSJ.getConversationId());
 
                 doDelete();
+
 
             } catch (UnreadableException e) {
                 e.printStackTrace();

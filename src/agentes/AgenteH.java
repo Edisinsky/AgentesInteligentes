@@ -18,56 +18,76 @@ public class AgenteH extends Agent {
     int numHijo;
     String nombreAgenteHijo;
     Entrada entrada;
+    int cont = 0;
 
     @Override
     protected void takeDown() {
         c.crearHijos(nombreAgenteHijo, new Object[]{entrada, c});
         System.out.println(getName() + " Terminado, se crea " + nombreAgenteHijo);
-
         System.out.println("Agent " + getLocalName() + " terminating.");
+        System.out.println("Hola, morí");
+
     }
 
+    @Override
+    protected void setup() {
+        addBehaviour(new ComportamientoAgenteH());
+    }
+
+    class ComportamientoAgenteH extends CyclicBehaviour {
+        //ACCION
         @Override
-        protected void setup () {
-            addBehaviour(new ComportamientoAgenteH());
-        }
-
-        class ComportamientoAgenteH extends CyclicBehaviour {
-            //ACCION
-            @Override
-            public void action() {
-
-                //Adquiere conocimiento de tipo Entrada
-                entrada = (Entrada) getArguments()[0];//Adquirir el conocimiento del agente 3
-                entrada.setSensor4(entrada.getSensor4() + 1);//Aumentar el valor de sensor 4
-
-                //Adquiere conocimiento del contenedor para poder crear otro hijo
-                c = (Contenedor) getArguments()[1];
-                numHijo = entrada.getNumHijo();
-                nombreAgenteHijo = "AgenteH" + numHijo;
-                System.out.println(nombreAgenteHijo + " Nace");
-                entrada.setNumHijo(numHijo+1);
-                // Enviar mensaje al agente 4
-                Mensajes.send_msj_Object(ACLMessage.INFORM, "Ag4", getAgent(), "H" + numHijo + "-4", entrada);
-
-                //Adquiere el numero de hijo
-                numHijo++;
-                nombreAgenteHijo = "AgenteH" + numHijo;
-
+        public void action() {
+            System.out.println("Soy el "+getAgent().getLocalName()+" y he nacido");
+            if (!(getAgent().getLocalName().equals("AgenteH1"))) {
                 ACLMessage aclMSJ = blockingReceive();
+                entrada = (Entrada) getArguments()[0];
+                entrada.setSensor4(entrada.getSensor4() + 1);
+                entrada.setNumHijo(entrada.getNumHijo() + 1);
+                nombreAgenteHijo = "AgenteH" + entrada.getNumHijo();
+                //Enviar mensaje a Agente 4
+                Mensajes.send_msj_Object(ACLMessage.INFORM, "Ag4", getAgent(),
+                        "cod-H" + entrada.getNumHijo() + "-4", entrada);//Enviar el conocimiento al agente 4
                 try {
                     entrada = (Entrada) aclMSJ.getContentObject();
-                    System.out.println("Hola soy el agente H, recibido de agente 4: " + entrada.toString() + " " + aclMSJ.getConversationId());
+                    System.out.println("Hola soy el agente:" + nombreAgenteHijo + " , recibido de agente 2: " + entrada.toString() + " " + aclMSJ.getConversationId());
                 } catch (UnreadableException e) {
                     throw new RuntimeException(e);
                 }
-
                 doDelete();
 
-
+            } else if (cont == 0) {
+                entrada = (Entrada) getArguments()[0];
+                entrada.setSensor4(entrada.getSensor4() + 1);
+                entrada.setNumHijo(entrada.getNumHijo() + 1);
+                c = (Contenedor) getArguments()[1];
+                Mensajes.send_msj_Object(ACLMessage.INFORM, "Ag4", getAgent(),
+                        "cod-H" + entrada.getNumHijo() + "-4", entrada);//Enviar el conocimiento al agente 4
+                cont++;
+            } else if (cont == 1) {
+                ACLMessage aclMSJ = blockingReceive();
+                try {
+                    System.out.println("Hola soy el agente:" + nombreAgenteHijo + " , recibido de agente 2: " + aclMSJ.getContentObject() + " " + aclMSJ.getConversationId());
+                } catch (UnreadableException e) {
+                    throw new RuntimeException(e);
+                }
+                try {
+                    entrada = (Entrada) aclMSJ.getContentObject();
+                } catch (UnreadableException e) {
+                    throw new RuntimeException(e);
+                }
+                numHijo = entrada.getNumHijo();
+                numHijo++;
+                nombreAgenteHijo = "AgenteH" + numHijo;
+                entrada.setNumHijo(numHijo);
+                Mensajes.send_msj_Object(ACLMessage.INFORM, "Ag4", getAgent(), "cod-H" + entrada.getNumHijo() + "-4", entrada);
+                doDelete();
             }
 
 
         }
+
+
     }
+}
 

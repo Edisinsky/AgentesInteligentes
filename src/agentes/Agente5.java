@@ -5,6 +5,7 @@ import Mensaje.Mensajes;
 import Modelo.Entrada;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
+import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.UnreadableException;
 
@@ -15,7 +16,7 @@ public class Agente5 extends Agent {
         addBehaviour(new ComportamientoAg5());
     }
 
-    class ComportamientoAg5 extends Behaviour {
+    class ComportamientoAg5 extends CyclicBehaviour {
 
         @Override
         public void action() {
@@ -23,7 +24,7 @@ public class Agente5 extends Agent {
             try {
                 // Recibir mensaje de agente 4
                 ACLMessage aclMSJ = blockingReceive();
-                System.out.println("Hola Agente 4, soy agente 5, RECIBIDO" + aclMSJ.getContentObject() +" "+ aclMSJ.getConversationId());
+                System.out.println("Hola Agente 4, soy agente 5, RECIBIDO" + aclMSJ.getContentObject() +" "+ aclMSJ.getConversationId()+" "+aclMSJ.getSender());
                 entrada = (Entrada) aclMSJ.getContentObject();
                 // Enviar mensaje a agente 1
                 Mensajes.send_msj_Object(ACLMessage.INFORM, "Ag1", getAgent(),
@@ -34,10 +35,6 @@ public class Agente5 extends Agent {
 
         }
 
-        @Override
-        public boolean done() {
-            return false;
-        }
 
     }
 
