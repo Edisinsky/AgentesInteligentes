@@ -27,9 +27,8 @@ public class Agente2 extends Agent {
             try {
                 //Se recibe el mensaje de Agente1
                 ACLMessage aclMSJ = blockingReceive();
-                System.out.println(aclMSJ.getContent());
                 entrada = (Entrada) aclMSJ.getContentObject();//Recibir conocimiento del agente 1
-                entrada.setSensor4(entrada.getSensor4() + 1);   //Aumentar el valor de sensor 4
+                entrada.setSensor4(entrada.getSensor4() + 1);//Aumentar el valor de sensor 4
                 System.out.println("Hola Agente 1, RECIBIDO, SOY AGENTE 2: " + aclMSJ.getContentObject() + " " + aclMSJ.getConversationId());//Confirmar la recepcion del mensaje
                 nombreAgenteHijo = "AgenteH" + entrada.getNumHijo();
 
@@ -37,20 +36,13 @@ public class Agente2 extends Agent {
                     // Se envia el mensaje a 3 una unica vez
                     Mensajes.send_msj_Object(ACLMessage.INFORM, "Ag3", getAgent(),
                             "cod-2-3", entrada);//Enviar el conocimiento al agente 3
-                    System.out.println("Enviado a Agente 3");
                     cont++;
-                } else if (entrada.getNumHijo()>=1) {
+                } else {
                     // Se envia el mensaje a H
-                   // System.out.println(nombreAgenteHijo+"ES EL NOMBRE DEL AGENTE HIJO");
                     Mensajes.send_msj_Object(ACLMessage.INFORM, nombreAgenteHijo, getAgent(),
                             "2-H"+nombreAgenteHijo, entrada);//Enviar el conocimiento al agente H
-                    System.out.println("Enviado a Agente H"+nombreAgenteHijo);
                 }
 
-                // Enviar mensaje a Agente 4
-                entrada.setSensor1(entrada.getSensor1() + "." + versionSensor);//Editar version de los sensores
-                entrada.setSensor2(entrada.getSensor2() + "." + versionSensor);
-                entrada.setSensor3(entrada.getSensor3() + "." + versionSensor);
 
                 Mensajes.send_msj_Object(ACLMessage.INFORM, "Ag4", getAgent(),
                         "cod-2-4", entrada);//Enviar el conocimiento al agente 4

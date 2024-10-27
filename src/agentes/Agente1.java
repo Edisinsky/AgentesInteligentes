@@ -40,7 +40,10 @@ public class Agente1 extends Agent {
             } catch (UnreadableException e) {
                 throw new RuntimeException(e);
             }
-            //doDelete();
+            cont++;
+           /* if(cont==10) {
+                doDelete();
+            }*/
 
 
         }
