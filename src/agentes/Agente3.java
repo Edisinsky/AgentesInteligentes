@@ -41,7 +41,7 @@ public class Agente3 extends Agent {
                 entrada.setSensor4(entrada.getSensor4() + 1);//Aumentar el valor de sensor 4
                 //Adquirir el contenedor
                 contenedor = (Contenedor) getArguments()[0];
-                System.out.println("MENSAJE DE AGENTE 2 RECIBIDO, SOY AGENTE 3 " + aclMSJ.getContentObject() +" "+ aclMSJ.getConversationId());
+                System.out.println("Hola Agente 2, soy Agente 3, recibí lo siguiente: " + aclMSJ.getContentObject() +" "+ aclMSJ.getConversationId());
 
                 doDelete();
 

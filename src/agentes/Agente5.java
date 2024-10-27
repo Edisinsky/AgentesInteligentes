@@ -24,7 +24,7 @@ public class Agente5 extends Agent {
             try {
                 // Recibir mensaje de agente 4
                 ACLMessage aclMSJ = blockingReceive();
-                System.out.println("Hola Agente 4, soy agente 5, RECIBIDO" + aclMSJ.getContentObject() +" "+ aclMSJ.getConversationId()+" "+aclMSJ.getSender());
+                System.out.println("Hola Agente 4, soy agente 5, recibí lo siguiente: " + aclMSJ.getContentObject() +" "+ aclMSJ.getConversationId()+" "+aclMSJ.getSender());
                 entrada = (Entrada) aclMSJ.getContentObject();
                 // Enviar mensaje a agente 1
                 Mensajes.send_msj_Object(ACLMessage.INFORM, "Ag1", getAgent(),

@@ -23,7 +23,7 @@ public class AgenteH extends Agent {
     @Override
     protected void takeDown() {
         c.crearHijos(nombreAgenteHijo, new Object[]{entrada, c});
-        System.out.println("Agent " + getLocalName() + " terminating.");
+        System.out.println("Agente " + getLocalName() + " muriendo...");
 
     }
 
@@ -41,7 +41,7 @@ public class AgenteH extends Agent {
                 c= (Contenedor) getArguments()[1];
                 entrada.setNumHijo(entrada.getNumHijo() + 1);
                 Mensajes.send_msj_Object(ACLMessage.INFORM, "Ag4", getAgent(),
-                        "cod"+getLocalName()+"+4", entrada);//Enviar el conocimiento al agente 4
+                        "cod"+getLocalName()+"-4", entrada);//Enviar el conocimiento al agente 4
                 cont++;
             }
 

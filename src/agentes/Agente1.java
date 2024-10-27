@@ -35,7 +35,7 @@ public class Agente1 extends Agent {
             ACLMessage aclMSJ = blockingReceive();
             try {
                 entrada = (Entrada)aclMSJ.getContentObject();
-                System.out.println("Hola soy el agente 1, recibido de agente 5: "+entrada.toString() + " " + aclMSJ.getConversationId()+" "+aclMSJ.getSender());
+                System.out.println("Hola Agente 5, soy Agente 1, recibí lo siguiente: "+entrada.toString() + " " + aclMSJ.getConversationId()+" "+aclMSJ.getSender());
 
             } catch (UnreadableException e) {
                 throw new RuntimeException(e);

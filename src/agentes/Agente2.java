@@ -29,7 +29,7 @@ public class Agente2 extends Agent {
                 ACLMessage aclMSJ = blockingReceive();
                 entrada = (Entrada) aclMSJ.getContentObject();//Recibir conocimiento del agente 1
                 entrada.setSensor4(entrada.getSensor4() + 1);//Aumentar el valor de sensor 4
-                System.out.println("Hola Agente 1, RECIBIDO, SOY AGENTE 2: " + aclMSJ.getContentObject() + " " + aclMSJ.getConversationId());//Confirmar la recepcion del mensaje
+                System.out.println("Hola Agente 1, soy Agente 2, El contenido del mensaje es: " + aclMSJ.getContentObject() + " " + aclMSJ.getConversationId());//Confirmar la recepcion del mensaje
                 nombreAgenteHijo = "AgenteH" + entrada.getNumHijo();
 
                 if (entrada.getNumHijo()==0) {
@@ -40,7 +40,7 @@ public class Agente2 extends Agent {
                 } else {
                     // Se envia el mensaje a H
                     Mensajes.send_msj_Object(ACLMessage.INFORM, nombreAgenteHijo, getAgent(),
-                            "2-H"+nombreAgenteHijo, entrada);//Enviar el conocimiento al agente H
+                            "2-"+nombreAgenteHijo, entrada);//Enviar el conocimiento al agente H
                 }
 
 
